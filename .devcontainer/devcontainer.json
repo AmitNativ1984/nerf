@@ -1,0 +1,59 @@
+// See https://aka.ms/vscode-remote/devcontainer.json for format details.
+{
+	"name": "${localWorkspaceFolderBasename}",
+	"dockerFile": "Dockerfile",
+	"build": {
+		"args": {
+			"BASE_IMAGE": "nvcr.io/nvidia/pytorch:23.02-py3",
+			"USERNAME": "${localEnv:USERNAME}",
+		}
+	},
+	"privileged": true,
+	"runArgs": [
+		"--network=host",
+		"--cap-add=SYS_PTRACE",
+		"--security-opt=seccomp:unconfined",
+		"--security-opt=apparmor:unconfined",
+		"-e",
+		"DISPLAY=${env:DISPLAY}",
+		"--ipc=host",
+		"--pid=host",
+		"--ulimit=memlock=-1",
+		"--ulimit=stack=6710886",
+		"--gpus=all",
+		"--runtime=nvidia"
+
+	],
+	// "remoteUser": "${localEnv:USERNAME}",
+	// "workspaceMount": "source=${localWorkspaceFolder},target=/home/${localEnv:USERNAME}/${localWorkspaceFolderBasename},type=bind",
+	// "workspaceFolder": "/home/${localEnv:USERNAME}/${localWorkspaceFolderBasename}",
+	"containerEnv": {
+		"DISPLAY": "${localEnv:DISPLAY}", // for GUI applications
+		"SSH_AUTH_SOCK": "/ssh-agent",
+	},
+	"mounts": [
+		"source=${localEnv:SSH_AUTH_SOCK},target=/ssh-agent,type=bind,consistency=cached",
+		"source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind,consistency=cached",
+		"source=/home/${localEnv:USERNAME}/.ssh,target=/home/${localEnv:USERNAME}/.ssh,type=bind,consistency=cached",
+	],
+	// "postCreateCommand": "sudo chown -R ${localEnv:USERNAME} /home/ws/",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"dotjoshjohnson.xml",
+				"zachflower.uncrustify",
+				"ms-python.python",
+				"ms-vscode.cpptools",
+				"redhat.vscode-yaml",
+				"ms-iot.vscode-ros",
+				"smilerobotics.urdf",
+				"streetsidesoftware.code-spell-checker",
+				"twxs.cmake",
+				"yzhang.markdown-all-in-one",
+				"mhutchie.git-graph",
+				"GitHub.copilot",
+				"ms-toolsai.jupyter"
+			],
+		}
+	}
+}
