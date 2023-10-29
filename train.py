@@ -143,7 +143,7 @@ if __name__ == '__main__':
     #########
     # MODEL #
     #########
-    nerf_model = TinyNerfModel(filter_size=256, num_encoding_functions=num_encoding_functions).to(device)
+    nerf_model = TinyNerfModel(filter_size=128, num_encoding_functions=num_encoding_functions).to(device)
     # nerf_model = FullNerfModel(filter_size=256, num_encoding_functions=num_encoding_functions).to(device)
     positional_encoding = PositionalEncoding(n_freq=num_encoding_functions).to(device)
 
